@@ -22,8 +22,8 @@ To learn more about configuring Logback, read its [documentation](http://logback
 
 1. Start a new REPL: `lein repl`
 2. Start your service in dev-mode: `(def dev-serv (run-dev))`
-3. Connect your editor to the running REPL session.
-   Re-evaluated code will be seen immediately in the service.
+3. `(require :reload 'test-service.service)` to reload file
+4. `(server/stop dev-serv)` to stop server
 
 ### [Docker](https://www.docker.com/) container support
 
