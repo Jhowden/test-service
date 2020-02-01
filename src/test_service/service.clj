@@ -5,7 +5,7 @@
             [ring.util.response :as ring-resp]))
 
 (defn about-page
-  [request]
+  [_]
   (ring-resp/response (format "Clojure %s - served from %s"
                               (clojure-version)
                               (route/url-for ::about-page))))
@@ -32,7 +32,7 @@
         response (greeting-for name)]
     (if response
       (ok response)
-      (not-found))))
+      not-found)))
 
 ;; Defines "/" and "/about" routes with their associated :get handlers.
 ;; The interceptors defined after the verb map (e.g., {:get home-page}
