@@ -2,13 +2,18 @@
   (:require [io.pedestal.http :as http]
             [io.pedestal.http.route :as route]
             [io.pedestal.http.body-params :as body-params]
-            [ring.util.response :as ring-resp]))
+            [ring.util.response :as ring-resp]
+            [views.layout :as layout]
+            [views.content :as content]))
 
 (defn about-page
   [_]
-  (ring-resp/response (format "Clojure %s - served from %s"
-                              (clojure-version)
-                              (route/url-for ::about-page))))
+  (ring-resp/response
+    (layout/application
+      "About Us"
+      [:p (format "Clojure %s - served from %s"
+            (clojure-version)
+            (route/url-for ::about-page))])))
 
 
 (def unmentionables #{"YHWH" "Voldemort" "Mxyzptlk" "Rumplestiltskin" "曹操"})
@@ -16,22 +21,22 @@
 (defn greeting-for [nm]
   (cond
     (unmentionables nm) nil
-    (empty? nm)         "Hello, world!\n"
-    :else               (str "Hello, " nm "\n")))
+    (empty? nm)         [:p "Hello, world!"]
+    :else               [:p (str "Hello, " nm)]))
 
 (defn ok
   [body]
   (ring-resp/response body))
 
 (def not-found
-  (ring-resp/not-found "Not found \n"))
+  (ring-resp/not-found (layout/application "Whoops!" (content/not-found-text))))
 
 (defn home-page
   [request]
   (let [name (get-in request [:query-params :name])
         response (greeting-for name)]
     (if response
-      (ok response)
+      (ok (layout/application "Home Page" response))
       not-found)))
 
 ;; Defines "/" and "/about" routes with their associated :get handlers.
