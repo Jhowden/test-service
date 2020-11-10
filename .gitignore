@@ -36,3 +36,7 @@ repl-port
 out/
 build/
 
+figwheel_server\.log
+.rebel_readline_history
+resources/public/js/out
+resources/public/js/test_service.js

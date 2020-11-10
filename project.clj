@@ -20,6 +20,7 @@
                  [org.slf4j/log4j-over-slf4j "1.7.26"]]
   :min-lein-version "2.0.0"
   :resource-paths ["config", "resources"]
+  :source-paths ["src/clj" "src/cljc"]
   ;; If you use HTTP/2 or ALPN, use the java-agent to pull in the correct alpn-boot dependency
   ;:java-agents [[org.mortbay.jetty.alpn/jetty-alpn-agent "2.0.5"]]
   :profiles {
@@ -31,13 +32,23 @@
                        :aot [test-service.server]
                       }
             }
-  :plugins [[lein-figwheel "0.5.13"]]
-  :clean-targets [:target-path "target"]
+  :plugins [[lein-figwheel "0.5.18"]]
+  :clean-targets ^{:protect false} [:target-path "resources/public/js/out" "resources/public/js/test_service.js"]
   :cljsbuild {
-    :builds [{:id "dev"
-              :source-paths ["src/clj" "src/cljc"]
+    :builds [{
+              :id "dev"
+              :source-paths ["src/cljc" "src/cljs"]
               :figwheel true
-              :compiler {:main "test-service.server"}
+              :compiler {
+                         :main test-service.core
+                         :asset-path "js/out"
+                         :output-to "resources/public/js/test_service.js"
+                         :output-dir "resources/public/js/out"
+                         :source-map-timestamp true
+                        }
              }]
    }
+  :figwheel {
+             :css-dirs ["resources/public/css"]
+            }
   :main ^{:skip-aot true} test-service.server)
