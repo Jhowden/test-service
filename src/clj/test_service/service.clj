@@ -89,8 +89,6 @@
               ::http/type :jetty
               ;;::http/host "localhost"
               ::http/port 8080
-              ;;::http/file-path     "target"
-              ::http/file-path     "target"
               ;; Options to pass to the container (Jetty)
               ::http/container-options {:h2c? true
                                         :h2? false
