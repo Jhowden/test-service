@@ -14,7 +14,7 @@
 (defn about-page
   [_]
   (ring-resp/response
-    (format "Clojure %s - served from %s"
+    (format "Clojure %s - served from %s. Thanks for visiting us!!!"
             (clojure-version)
             (route/url-for ::about-page))))
 

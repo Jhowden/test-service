@@ -51,6 +51,7 @@
           (into [name-line (repeat-str "-" (count name-line))]
                 (map interceptor-info interceptors)))))))
 
+;; we can reload changes with by running (require :reload `test-service.server) in the repl
 (defn run-dev
   "The entry-point for 'lein run-dev'"
   [& args]
@@ -71,6 +72,10 @@
       server/dev-interceptors
       server/create-server
       server/start))
+
+(defn stop-dev
+  [server]
+  (server/stop server))
 
 (defn -main
   "The entry-point for 'lein run'"

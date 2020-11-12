@@ -18,7 +18,7 @@
 (defn hello-world []
   [:div
    [:h1 (:text @app-state)]
-   [:p "This will show up 3"]])
+   [:p "This will show up 4"]])
 
 (defn mount [el]
   (rdom/render [hello-world] el))

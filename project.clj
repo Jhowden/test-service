@@ -14,6 +14,8 @@
                 ;  [hiccup "1.0.5"]
                  [reagent "0.10.0"]
                  [clj-commons/secretary "1.2.4"]
+                 [figwheel-sidecar "0.5.18"]
+                 [com.bhauman/rebel-readline "0.1.4"]
 
                  [ch.qos.logback/logback-classic "1.2.3" :exclusions [org.slf4j/slf4j-api]]
                  [org.slf4j/jul-to-slf4j "1.7.26"]
@@ -26,7 +28,10 @@
   ;:java-agents [[org.mortbay.jetty.alpn/jetty-alpn-agent "2.0.5"]]
   :profiles {
              :dev {
-                   :aliases {"run-dev" ["trampoline" "run" "-m" "test-service.server/run-dev"]}
+                   :aliases {
+                             "run-dev" ["trampoline" "run" "-m" "test-service.server/run-dev"]
+                             "dev" ["trampoline" "run" "-m" "clojure.main" "--init" "script/figwheel.clj" "-m" "rebel-readline.main"]
+                             }
                    :dependencies [[io.pedestal/pedestal.service-tools "0.5.8"]]
                   }
              :uberjar {
