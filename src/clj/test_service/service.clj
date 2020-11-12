@@ -2,7 +2,14 @@
   (:require [io.pedestal.http :as http]
             [io.pedestal.http.route :as route]
             [io.pedestal.http.body-params :as body-params]
-            [ring.util.response :as ring-resp]))
+            [ring.util.response :as ring-resp]
+            [clojure.java.io :as io]))
+
+(defn index-page
+  "Prompt a user for their name, then remember it."
+  [_]
+  (ring-resp/response
+   (slurp (io/resource "public/index.html"))))
 
 (defn about-page
   [_]
@@ -40,7 +47,8 @@
 (def common-interceptors [(body-params/body-params) http/html-body])
 
 ;; Tabular routes
-(def routes #{["/" :get (conj common-interceptors `home-page)]
+(def routes #{["/" :get (conj common-interceptors `index-page)]
+              ["/2" :get (conj common-interceptors `home-page)]
               ["/about" :get (conj common-interceptors `about-page)]})
 
 ;; Map-based routes
